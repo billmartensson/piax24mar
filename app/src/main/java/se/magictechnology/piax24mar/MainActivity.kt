@@ -11,7 +11,36 @@ import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 
 class StartViewmodel : ViewModel() {
-    var number = 0
+    private var number = 0
+
+    fun getTheNumber() : Int
+    {
+        return number
+    }
+
+    fun addNumber()
+    {
+        number = number + 1
+
+        if(number > 5)
+        {
+            number = 5
+        }
+    }
+
+    fun minusNumber()
+    {
+        number = number - 1
+        if(number < 0)
+        {
+            number = 0
+        }
+    }
+
+    fun resetNumber()
+    {
+        number = 0
+    }
 }
 
 class MainActivity : AppCompatActivity() {
@@ -26,21 +55,21 @@ class MainActivity : AppCompatActivity() {
 
         val model : StartViewmodel by viewModels()
 
-        findViewById<TextView>(R.id.headerTextview).text = model.number.toString()
+        findViewById<TextView>(R.id.headerTextview).text = model.getTheNumber().toString()
 
         findViewById<Button>(R.id.nameButton).setOnClickListener {
             var thename = findViewById<EditText>(R.id.nameEdittext).text.toString()
 
             //findViewById<TextView>(R.id.headerTextview).text = thename
 
-            model.number = model.number + 1
-            findViewById<TextView>(R.id.headerTextview).text = model.number.toString()
+            model.addNumber()
+            findViewById<TextView>(R.id.headerTextview).text = model.getTheNumber().toString()
         }
 
         findViewById<Button>(R.id.resetButton)?.let {
             it.setOnClickListener {
-                model.number = 0
-                findViewById<TextView>(R.id.headerTextview).text = model.number.toString()
+                model.resetNumber()
+                findViewById<TextView>(R.id.headerTextview).text = model.getTheNumber().toString()
             }
         }
 
